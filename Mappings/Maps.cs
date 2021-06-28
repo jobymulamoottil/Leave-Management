@@ -12,9 +12,7 @@ namespace Leave_Management.Mappings
     {
         public Maps()
         {
-            CreateMap<LeaveTypes, DetailsLeaveTypeVM>().ReverseMap();
-
-            CreateMap<LeaveTypes, CreateLeaveTypeVM>().ReverseMap();
+            CreateMap<LeaveTypes, LeaveTypeVM>().ReverseMap();
 
             CreateMap<Employee, EmployeeVM>().ReverseMap();
 
