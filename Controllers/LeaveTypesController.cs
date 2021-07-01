@@ -2,6 +2,7 @@
 using Leave_Management.Contracts;
 using Leave_Management.Data;
 using Leave_Management.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Leave_Management.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository _repos;
@@ -23,7 +25,6 @@ namespace Leave_Management.Controllers
         }
 
 
-        // GET: LeaveTypesController
         public ActionResult Index()
         {
             var leaveTypes = _repos.FindAll().ToList();
@@ -143,7 +144,7 @@ namespace Leave_Management.Controllers
             try
             {
                 var leaveTypes = _repos.FindById(id);
-                if(leaveTypes==null)
+                if (leaveTypes == null)
                 {
                     return NotFound();
                 }
