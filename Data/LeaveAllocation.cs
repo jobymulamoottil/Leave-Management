@@ -26,5 +26,7 @@ namespace Leave_Management.Data
 
         public int LeaveTypesId { get; set; }
 
+        public int Period { get; set; }
+
     }
 }
