@@ -1,5 +1,5 @@
 ﻿@model HomeVM
-@using Leave_Management.Data 
+@using Leave_Management.Data
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Employee> SignInManager
 @inject UserManager<Employee> UserManager
@@ -12,7 +12,7 @@
 <div class="text-center">
     @if (SignInManager.IsSignedIn(User))
     {
-        <h1 class="display-4">Welcome @User.Identity.Name</h1>
+        <h1 class="display-4">Welcome @Model.FirstName @Model.LastName</h1>
     }
     else
     {

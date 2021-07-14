@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Leave_Management.Contracts;
+using Leave_Management.Data;
 using Leave_Management.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,22 +21,27 @@ namespace Leave_Management.Controllers
         private readonly ILeaveTypeRepository _leavetyperepos;
         private readonly ILeaveRequestRepository _leaveRequestRepo;
         private readonly IMapper _mapper;
+        private readonly UserManager<Employee> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ILeaveTypeRepository leavetyperepos, 
-                              IMapper mapper, ILeaveRequestRepository leaveRequestRepo)
+        public HomeController(ILogger<HomeController> logger, ILeaveTypeRepository leavetyperepos,
+                              IMapper mapper, ILeaveRequestRepository leaveRequestRepo, UserManager<Employee> userManager)
         {
             _logger = logger;
             _leavetyperepos = leavetyperepos;
             _leaveRequestRepo = leaveRequestRepo;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
+            var user = _userManager.GetUserAsync(User).Result;
             var leaveRequests = _leaveRequestRepo.FindAll();
             var leaveRequestModel = _mapper.Map<List<LeaveRequestVM>>(leaveRequests);
             var model = new HomeVM
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 TotalRequests = leaveRequestModel.Count,
                 ApprovedRequests = leaveRequestModel.Count(q => q.Approved == true),
                 PendingRequests = leaveRequestModel.Count(q => q.Approved == null),

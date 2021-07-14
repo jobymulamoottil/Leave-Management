@@ -8,6 +8,10 @@ namespace Leave_Management.Models
 {
     public class HomeVM
     {
+        public string FirstName { get; set; }
+        
+        public string LastName { get; set; }
+
         [Display(Name = "Total Requests")]
         public int TotalRequests { get; set; }
 
