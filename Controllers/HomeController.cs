@@ -33,10 +33,10 @@ namespace Leave_Management.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var user = _userManager.GetUserAsync(User).Result;
-            var leaveRequests = _leaveRequestRepo.FindAll();
+            var user = await _userManager.GetUserAsync(User);
+            var leaveRequests = await _leaveRequestRepo.FindAll();
             var leaveRequestModel = _mapper.Map<List<LeaveRequestVM>>(leaveRequests);
             var model = new HomeVM
             {
