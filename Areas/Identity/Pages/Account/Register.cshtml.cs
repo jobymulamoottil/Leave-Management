@@ -72,7 +72,7 @@ namespace Leave_Management.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
-            [Required]  
+            [Required]
             [DataType(DataType.Text)]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
@@ -92,7 +92,7 @@ namespace Leave_Management.Areas.Identity.Pages.Account
             {
                 var user = new Employee
                 {
-                    UserName = Input.Email,
+                    UserName = Input.UserName,
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName
