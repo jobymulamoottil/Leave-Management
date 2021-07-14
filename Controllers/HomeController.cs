@@ -5,6 +5,7 @@ using Leave_Management.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,17 +19,14 @@ namespace Leave_Management.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ILeaveTypeRepository _leavetyperepos;
-        private readonly ILeaveRequestRepository _leaveRequestRepo;
+        private readonly IUnitOfWork _unitofwork;
         private readonly IMapper _mapper;
         private readonly UserManager<Employee> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ILeaveTypeRepository leavetyperepos,
-                              IMapper mapper, ILeaveRequestRepository leaveRequestRepo, UserManager<Employee> userManager)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitofwork, IMapper mapper, UserManager<Employee> userManager)
         {
             _logger = logger;
-            _leavetyperepos = leavetyperepos;
-            _leaveRequestRepo = leaveRequestRepo;
+            _unitofwork = unitofwork;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -36,12 +34,15 @@ namespace Leave_Management.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            var leaveRequests = await _leaveRequestRepo.FindAll();
+            var leaveRequests = await _unitofwork.LeaveRequests.FindAll(includes: q => q
+                                                                .Include(x => x.LeaveTypes)
+                                                                .Include(x => x.RequestingEmployee));
             var leaveRequestModel = _mapper.Map<List<LeaveRequestVM>>(leaveRequests);
             var model = new HomeVM
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Email = user.Email,
                 TotalRequests = leaveRequestModel.Count,
                 ApprovedRequests = leaveRequestModel.Count(q => q.Approved == true),
                 PendingRequests = leaveRequestModel.Count(q => q.Approved == null),

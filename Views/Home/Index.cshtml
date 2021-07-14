@@ -12,7 +12,14 @@
 <div class="text-center">
     @if (SignInManager.IsSignedIn(User))
     {
-        <h1 class="display-4">Welcome @Model.FirstName @Model.LastName</h1>
+        @if (@Model.FirstName == null)
+        {
+            <h1 class="display-4">Welcome @Model.Email</h1>
+        }
+        else
+        {
+            <h1 class="display-4">Welcome @Model.FirstName @Model.LastName</h1>
+        }
     }
     else
     {
