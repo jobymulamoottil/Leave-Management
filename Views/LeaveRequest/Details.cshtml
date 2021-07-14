@@ -85,13 +85,13 @@ else
     @if (Model.Approved == null)
     {
         <a class="btn btn-success" asp-controller="LeaveRequest" asp-action="ApproveRequest" asp-route-id="@Model.Id">
-            <i class="fa fa-check" aria-hidden="true"></i> Approve
+            <i class="fas fa-check" aria-hidden="true"></i> Approve
         </a>
         <a class="btn btn-danger" asp-controller="LeaveRequest" asp-action="RejectRequest" asp-route-id="@Model.Id">
-            <i class="fa fa-times" aria-hidden="true"></i> Reject
+            <i class="fas fa-times" aria-hidden="true"></i> Reject
         </a>
     }
     <a class="btn btn-outline-secondary" asp-action="Index">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to List
+        <i class="fas fa-chevron-left" aria-hidden="true"></i> Back to List
     </a>
 </div>
