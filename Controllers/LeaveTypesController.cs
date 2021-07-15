@@ -122,28 +122,14 @@ namespace Leave_Management.Controllers
             }
         }
 
-        // GET: LeaveTypesController/Delete/5
-        public async Task<ActionResult> Delete(int id)
-        {
-            var leaveTypes = await _unitofwork.LeaveTypes.Find(expression: q => q.Id == id);
-            if (leaveTypes == null)
-            {
-                return NotFound();
-            }
-            _unitofwork.LeaveTypes.Delete(leaveTypes);
-            await _unitofwork.Save();
-
-            return RedirectToAction(nameof(Index));
-        }
-
         // POST: LeaveTypesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, LeaveTypeVM model)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                var leaveTypes = await _unitofwork.LeaveTypes.Find(q=>q.Id==id);
+                var leaveTypes = await _unitofwork.LeaveTypes.Find(q => q.Id == id);
                 if (leaveTypes == null)
                 {
                     return NotFound();
@@ -151,12 +137,11 @@ namespace Leave_Management.Controllers
                 _unitofwork.LeaveTypes.Delete(leaveTypes);
                 await _unitofwork.Save();
 
-                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(model);
             }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

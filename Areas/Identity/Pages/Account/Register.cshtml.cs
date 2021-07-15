@@ -103,6 +103,18 @@ namespace Leave_Management.Areas.Identity.Pages.Account
                 {
                     _userManager.AddToRoleAsync(user, "Employee").Wait();
                     _logger.LogInformation("User created a new account with password.");
+
+                    //Email
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page("/Account/ConfirmEmail", pageHandler: null,
+                                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                                        protocol: Request.Scheme);
+                    await _emailSender.SendEmailAsync(Input.Email,"Confirm Your Email",
+                          $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.<br/><br/>Thank you for Choosing Leave Management. ");
+
+                    //Email
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

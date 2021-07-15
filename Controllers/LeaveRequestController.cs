@@ -2,15 +2,18 @@
 using Leave_Management.Contracts;
 using Leave_Management.Data;
 using Leave_Management.Models;
+using Leave_Management.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Leave_Management.Controllers
@@ -23,10 +26,11 @@ namespace Leave_Management.Controllers
         //private readonly ILeaveTypeRepository _leaverepos;
         //private readonly ILeaveRequestRepository _leaveRequestRepo;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailSender _emailsender;
         private readonly IMapper _mapper;
         private readonly UserManager<Employee> _userManager;
 
-        public LeaveRequestController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<Employee> userManager)
+        public LeaveRequestController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<Employee> userManager, IEmailSender emailsender)
         {
             //_leaveAllocationrepos = leaveAllocationrepos;
             //_leaverepos = leaverepo;
@@ -34,6 +38,7 @@ namespace Leave_Management.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
+            _emailsender = emailsender;
         }
 
         [Authorize(Roles = "Administrator")]
@@ -211,6 +216,11 @@ namespace Leave_Management.Controllers
                 await _unitOfWork.LeaveRequests.Create(leaveRequest);
                 await _unitOfWork.Save();
 
+
+                //Email using MailKit.Net.Smtp
+                await _emailsender.SendEmailAsync(employee.Email, "Leave Request Confirmation",
+                        $"Dear " + employee.FirstName + employee.LastName + ", <br/><br/>Your " + leaveRequest.LeaveTypes.Name + " Leave has been saved successfully.");
+                //Email
 
                 return RedirectToAction("MyLeave");
             }
