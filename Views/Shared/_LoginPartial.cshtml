@@ -9,9 +9,18 @@
         <li class="nav-item">
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
                 <i class="nav-icon fas fa-user-alt"></i>
-                <p>
-                    @User.Identity.Name!
-                </p>
+                @if (@User.Identity.Name == "admin@localhost.com")
+                {
+                    <p>
+                        Dr.Ashley
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        @User.Identity.Name
+                    </p>
+                }
             </a>
         </li>
         <li class="nav-item">

@@ -3,6 +3,56 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script type="text/javascript">
+    function functionConfirm(event) {
+        swal({
+            title: "Delete This Leave Type?",
+            text: "This action can't be undo...",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonClass: 'btn-secondary waves-effect',
+            confirmButtonClass: 'btn-danger waves-effect waves-light',
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $(event).closest('form').submit();
+            }
+            else {
+                return false;
+            }
+        });
+        return false;
+    }
+
+    //$(document).ready(function () {
+    //    $("#btnDelete").click(function (e) {
+    //        e.preventDefault();
+    //        swal({
+    //            title: "Save Changes?",
+    //            text: "",
+    //            type: "info",
+    //            showCancelButton: true,
+    //            cancelButtonClass: 'btn-secondary waves-effect',
+    //            confirmButtonClass: 'btn-success waves-effect waves-light',
+    //            confirmButtonText: "Yes",
+    //            closeOnConfirm: false
+    //        })
+    //            .then(val => {
+    //                if (!val) throw null;
+    //                swal("Saved!", "Your record has been saved.", "success")
+    //                    .then((confirm) => {
+    //                        $("#LeaveType").submit();
+    //                    })
+    //            });
+    //    });
+
+    //    $(document).on('submit', function () {
+    //        swal("Deleted!", "Your record has been deleted.", "success")
+    //    })
+    //});
+</script>
+
 
 <h1>Leave Types</h1>
 <hr />
@@ -48,7 +98,7 @@
                         </div>
                         <div class="col-2">
                             <form asp-action="Delete" asp-route-id="@item.Id" method="post">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure want to Delete?')">
+                                <button type="submit" class="btn btn-danger" onclick="return functionConfirm(this)">
                                     <i class="fas fa-trash" aria-hidden="true"></i>
                                 </button>
                             </form>
@@ -59,10 +109,3 @@
         }
     </tbody>
 </table>
-
-@section Scripts{
-    <script>
-
-
-    </script>
-}

@@ -3,7 +3,28 @@
 @{
     ViewData["Title"] = "MyLeave";
 }
-
+<script type="text/javascript">
+    function functionConfirm(event) {
+        swal({
+            title: "Delete This Leave Type?",
+            text: "This action can't be undo...",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonClass: 'btn-secondary waves-effect',
+            confirmButtonClass: 'btn-danger waves-effect waves-light',
+            confirmButtonText: "Yes",
+            closeOnConfirm: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $(event).closest('form').submit();
+            }
+            else {
+                return false;
+            }
+        });
+        return false;
+    }
+</script>
 <h1>My Leave Allocations</h1>
 <div class="jumbotron">
     <div class="card">
@@ -81,13 +102,15 @@
                     }
                 </td>
                 <td>
-                    @if (!item.Cancelled && item.StartDate > DateTime.Now)
+                    @if (!item.Cancelled && item.StartDate.Date >= DateTime.Now.Date)
                     {
-                        <a asp-action="CancelRequest" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to cancel this request?')">
-                            <i class="fas fa-trash" aria-hidden="true"></i>
-                        </a>
-                    }
+                        <form asp-action="CancelRequest" asp-route-id="@item.Id" method="post">
+                            <button type="submit" class="btn btn-danger" onclick="return functionConfirm(this)">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </button>
 
+                        </form>
+                    }
                 </td>
             </tr>
         }

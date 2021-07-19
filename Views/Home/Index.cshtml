@@ -14,7 +14,7 @@
     {
         @if (@Model.FirstName == null)
         {
-            <h1 class="display-4">Welcome @Model.Email</h1>
+            <h1 class="display-4">Welcome Dr.Ashley Mulamoottil</h1>
         }
         else
         {
@@ -28,61 +28,63 @@
     <br />
     <br />
     <br />
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>@Model.TotalRequests</h3>
+    @if (@Model.FirstName == null)
+    {
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>@Model.TotalRequests</h3>
 
-                        <p>@Html.DisplayNameFor(model => model.TotalRequests)</p>
+                            <p>@Html.DisplayNameFor(model => model.TotalRequests)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a asp-controller="LeaveRequest" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>@Model.ApprovedRequests</h3>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>@Model.ApprovedRequests</h3>
 
-                        <p>@Html.DisplayNameFor(model => model.ApprovedRequests)</p>
+                            <p>@Html.DisplayNameFor(model => model.ApprovedRequests)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a asp-controller="LeaveRequest" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>@Model.PendingRequests</h3>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>@Model.PendingRequests</h3>
 
-                        <p>@Html.DisplayNameFor(model => model.PendingRequests)</p>
+                            <p>@Html.DisplayNameFor(model => model.PendingRequests)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a asp-controller="LeaveRequest" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>@Model.RejectedRequests</h3>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>@Model.RejectedRequests</h3>
 
-                        <p>@Html.DisplayNameFor(model => model.RejectedRequests)</p>
+                            <p>@Html.DisplayNameFor(model => model.RejectedRequests)</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a asp-controller="LeaveRequest" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
-    </div>
-
+    }
 </div>
